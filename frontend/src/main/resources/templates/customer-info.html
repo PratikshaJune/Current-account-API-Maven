@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Information</title>
+</head>
+<body>
+<h1>Customer Information</h1>
+<div>
+    <p><strong>Name:</strong> <span th:text="${customer.firstName} + ' ' + ${customer.lastName}"></span></p>
+    <p><strong>Accounts:</strong></p>
+    <ul>
+        <li th:each="account : ${customer.accounts}">
+            <p>Account ID: <span th:text="${account.id}"></span></p>
+            <p>Balance: <span th:text="${account.balance}"></span></p>
+            <p>Transactions:</p>
+            <ul>
+                <li th:each="transaction : ${account.transactions}">
+                    <p>Transaction ID: <span th:text="${transaction.id}"></span></p>
+                    <p>Amount: <span th:text="${transaction.amount}"></span></p>
+                    <p>Date: <span th:text="${transaction.date}"></span></p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

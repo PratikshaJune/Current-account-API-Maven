@@ -1,0 +1,55 @@
+services:
+  eureka-server:
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - spring-cloud-network
+
+  account-service:
+    build:
+      context: ./account-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - spring-cloud-network
+    depends_on:
+      - eureka-server
+
+  transaction-service:
+    build:
+      context: ./transaction-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - spring-cloud-network
+    depends_on:
+      - eureka-server
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8765:8765"
+    networks:
+      - spring-cloud-network
+    depends_on:
+      - eureka-server
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-cloud-network
+
+networks:
+  spring-cloud-network:
+    driver: bridge
